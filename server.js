@@ -22,7 +22,17 @@ app.use(bodyParser.json());
 app.use(cors());
 
 //app.use(express.json());
+const myLogger = (req, res, next) => {
+  console.log("LOGGED");
+  next();
+};
 
+app.use(myLogger);
+
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send("Something went wrong.");
+});
 /**
  * @swagger
  * /products:
